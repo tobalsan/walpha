@@ -1,17 +1,20 @@
 package main
 
 import (
+	_ "embed"
 	"flag"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
 	"os"
-	"path/filepath"
 	"regexp"
 	"strings"
 	"time"
 )
+
+//go:embed docs/examples.md
+var examplesContent string
 
 const (
 	version    = "0.1.0"
@@ -209,26 +212,5 @@ func formatMarkdown(s string) string {
 }
 
 func printExamples() {
-	exe, err := os.Executable()
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "error: cannot find executable path")
-		os.Exit(exitGeneral)
-	}
-
-	exeDir := filepath.Dir(exe)
-	paths := []string{
-		filepath.Join(exeDir, "docs", "examples.md"),
-		filepath.Join(".", "docs", "examples.md"),
-	}
-
-	for _, path := range paths {
-		content, err := os.ReadFile(path)
-		if err == nil {
-			fmt.Print(string(content))
-			return
-		}
-	}
-
-	fmt.Fprintln(os.Stderr, "error: examples.md not found")
-	os.Exit(exitGeneral)
+	fmt.Print(examplesContent)
 }
