@@ -1,0 +1,9 @@
+# Binary
+walpha
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
